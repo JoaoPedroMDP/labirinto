@@ -1,0 +1,6 @@
+*.h.gch
+a.out
+.vscode/*
+*.json
+CMakeLists.txt
+.idea

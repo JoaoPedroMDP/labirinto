@@ -1,18 +1,45 @@
+#include <stdio.h>
 #include "maze.h"
-#include <math.h>
 
-Maze *mallocMaze(int maze_size){
-    Maze *newMaze = malloc(sizeof(Maze));
-    newMaze->maze_size = maze_size;
-    newMaze->maze = malloc(pow(maze_size, 2) * sizeof(int));
-    newMaze->player_col = 0;
-    newMaze->player_row = 0;
-
-    return newMaze;
-}
-enum cell_types {Free, Wall, Visited, Alley, CurrentPosition};
-
-Maze *createMaze()
+void setCell(Maze *maze, int i, int j, int number)
 {
-    Maze *newMaze = mallocMaze();
+    maze->maze[i][j] = number;
+}
+
+int getCell(Maze *maze, int i, int j)
+{
+    return maze->maze[i][j];
+}
+
+void printsMaze(Maze *maze)
+{
+    int i = 0, j = 0;
+    for( i = 0 ; i < maze->size ; i++ )
+    {
+        for( j = 0 ; j < maze->size ; j++ )
+        {
+            printCell(maze, i, j);
+        }
+        printf("\n");
+    }
+}
+
+void printCell(Maze *maze, int i, int j)
+{
+    int content = getCell(maze, i, j);
+    if(content == Wall)
+    {
+        printf("\U0001F7E7");
+    }else if(content == Visited)
+    {
+        printf(".");
+    }else if( content == CurrentPosition)
+    {
+        printf("\U0001F42D");
+    }else if(content == Exit)
+    {
+        printf("\U0001F9C0");
+    }else{
+        printf("  ");
+    }
 }
