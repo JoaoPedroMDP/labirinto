@@ -1,5 +1,8 @@
 #ifndef MAZE_H
 #define MAZE_H
+#include "node.h"
+#include "stack.h"
+#define SIZE 60
 
 typedef struct Maze Maze;
 struct Maze{
@@ -9,15 +12,24 @@ struct Maze{
     int end_coordinates[2];
 
     int size;
-    int maze[30][30];
+    int maze[SIZE][SIZE];
+
+    Stack *movements;
 };
 
 enum cell_types {Free, Wall, Visited, Alley, CurrentPosition, Start, Exit};
 
 Maze *mallocMaze();
-void setCell(Maze *maze, int i, int j, int number);
-int getCell(Maze *maze, int i, int j);
-void printsMaze(Maze *maze);
-void printCell(Maze *maze, int i, int j);
 
+void setCell(Maze *maze, int x, int y, int number);
+int getCell(Maze *maze, int x, int y);
+void setAlley(Maze *maze);
+
+void printsMaze(Maze *maze);
+void printCell(Maze *maze, int x, int y);
+
+int upIsFree(Maze *maze);
+int rightIsFree(Maze *maze);
+int downIsFree(Maze *maze);
+int leftIsFree(Maze *maze);
 #endif //MAZE_H

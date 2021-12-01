@@ -3,5 +3,5 @@
 
 #include "maze.h"
 
-Maze *createMaze();
+Maze *createMaze(Stack *moveStack);
 #endif //CREATE_MAZE_H

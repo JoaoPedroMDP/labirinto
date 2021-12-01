@@ -1,10 +1,9 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include "maze.h"
 #include "createMaze.h"
-
-#define SIZE 30
 
 int random_int_between(int x, int y)
 {
@@ -19,6 +18,7 @@ Maze *mallocMaze(int size){
     for ( i = 0; i < newMaze->size; i++)
         for(j = 0; j < newMaze->size; j++)
             setCell(newMaze, i, j, 0);
+    srand(time(NULL));
 
     newMaze->start_coordinates[0] = rand() % newMaze->size;
     newMaze->start_coordinates[1] = rand() % newMaze->size;
@@ -28,13 +28,16 @@ Maze *mallocMaze(int size){
     newMaze->player_coordinates[0] = newMaze->start_coordinates[0];
     newMaze->player_coordinates[1] = newMaze->start_coordinates[1];
 
+    newMaze->movements = NULL;
     return newMaze;
 }
 
 void configureMaze(Maze *maze);
-Maze *createMaze()
+Maze *createMaze(Stack *moveStack)
 {
     Maze *newMaze = mallocMaze(SIZE);
+    newMaze->movements = moveStack;
+
     configureMaze(newMaze);
     return newMaze;
 }
@@ -71,7 +74,6 @@ int firstLine(Maze *maze, int line)
 {
     return line == 0;
 }
-
 int lastLine(Maze *maze, int line)
 {
     return line == maze->size - 1;
@@ -98,5 +100,4 @@ void distributeWallsOnLine(Maze *maze, int line, int wallAmount)
         setCell(maze, line, j, Wall);
         remaining_walls_in_line--;
     }
-
 }
